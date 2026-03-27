@@ -7,24 +7,24 @@ export default function Header() {
   const { theme, toggle } = useTheme();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 bg-white/60 dark:bg-gray-950/60 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/[0.06]">
+      {/* Subtle gradient line at the bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />
       <div className="mx-auto max-w-6xl flex items-center justify-between px-4 sm:px-6 h-16">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
           <span className="text-2xl">⚡</span>
-          <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
-            SnapTools
-          </span>
+          <span className="gradient-text">SnapTools</span>
         </Link>
         <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="hidden sm:block text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+            className="hidden sm:block text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-200"
           >
             All Tools
           </Link>
           <button
             onClick={toggle}
-            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-100/80 dark:hover:bg-white/5 transition-colors duration-200"
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
