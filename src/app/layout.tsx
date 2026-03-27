@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     "word counter",
   ],
   metadataBase: new URL("https://snaptools-seven.vercel.app"),
+  verification: {
+    google: "b0myt7Y7EJQ9kU",
+  },
   openGraph: {
     title: "SnapTools — Free Online Tools That Work Instantly",
     description:
