@@ -2,6 +2,41 @@
 
 import { useState } from "react";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "What is Base64 encoding?",
+    answer:
+      "Base64 is a method of encoding binary data into ASCII text. It's commonly used to embed images in HTML/CSS, transmit data in URLs, encode email attachments, and store binary data in JSON or XML formats.",
+  },
+  {
+    question: "Does this tool support Unicode characters?",
+    answer:
+      "Yes! This Base64 encoder fully supports Unicode text including emojis, accented characters, Chinese/Japanese/Korean characters, and all other UTF-8 encoded text.",
+  },
+  {
+    question: "Is Base64 encoding the same as encryption?",
+    answer:
+      "No. Base64 is an encoding scheme, not encryption. It converts data to a different representation but provides no security. Anyone can decode Base64 strings. For security, use proper encryption tools.",
+  },
+  {
+    question: "Is my data private when using this tool?",
+    answer:
+      "Yes. All encoding and decoding happens locally in your browser. No data is ever sent to a server. Your text stays completely private on your device.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 export default function Base64Encoder() {
   const [input, setInput] = useState("");
@@ -43,6 +78,15 @@ export default function Base64Encoder() {
     <ToolLayout
       title="Base64 Encode/Decode"
       description="Encode text to Base64 or decode Base64 back to readable text."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         {/* Mode toggle */}

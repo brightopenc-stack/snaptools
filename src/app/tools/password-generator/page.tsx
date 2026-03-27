@@ -2,6 +2,41 @@
 
 import { useState, useCallback } from "react";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "How secure are the generated passwords?",
+    answer:
+      "Very secure. This tool uses the Web Crypto API (crypto.getRandomValues) for true cryptographic randomness. A 16-character password with all character types has over 100 bits of entropy, making it virtually uncrackable by brute force.",
+  },
+  {
+    question: "Is my generated password stored or sent anywhere?",
+    answer:
+      "No. Everything runs 100% in your browser. No passwords are ever transmitted to a server, logged, or stored. Once you close or refresh the page, the password is gone.",
+  },
+  {
+    question: "What password length should I use?",
+    answer:
+      "We recommend at least 16 characters for strong security. For critical accounts (banking, email), use 20+ characters. The strength meter on the tool shows you the estimated security level in real time.",
+  },
+  {
+    question: "Can I generate passwords without special characters?",
+    answer:
+      "Yes! Use the checkboxes to toggle uppercase letters, lowercase letters, numbers, and symbols on or off. Some websites restrict certain special characters, so you can customize to fit any requirements.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 export default function PasswordGenerator() {
   const [length, setLength] = useState(16);
@@ -51,6 +86,15 @@ export default function PasswordGenerator() {
     <ToolLayout
       title="Password Generator"
       description="Create strong, secure passwords with customizable length and character types."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         {/* Output */}

@@ -2,6 +2,41 @@
 
 import { useState } from "react";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "What does a JSON formatter do?",
+    answer:
+      "A JSON formatter takes raw or minified JSON data and reformats it with proper indentation and line breaks, making it easy to read and debug. This tool also validates your JSON and catches syntax errors.",
+  },
+  {
+    question: "Is my JSON data safe when using this tool?",
+    answer:
+      "Yes. All formatting and validation happens entirely in your browser. Your JSON data is never sent to any server or stored anywhere. It's completely private.",
+  },
+  {
+    question: "Can I minify JSON with this tool?",
+    answer:
+      "Yes! Click the \"Minify\" button to compress your JSON by removing all unnecessary whitespace. This is useful for reducing payload size in APIs and configuration files.",
+  },
+  {
+    question: "What JSON errors does the validator detect?",
+    answer:
+      "The validator catches all JSON syntax errors including missing commas, unclosed brackets, invalid strings, trailing commas, and other common mistakes. Error messages pinpoint the exact issue.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 export default function JsonFormatter() {
   const [input, setInput] = useState("");
@@ -54,6 +89,15 @@ export default function JsonFormatter() {
     <ToolLayout
       title="JSON Formatter & Validator"
       description="Pretty-print, minify, and validate JSON with detailed error messages."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         <div>

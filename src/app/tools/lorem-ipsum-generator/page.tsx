@@ -2,6 +2,41 @@
 
 import { useState } from "react";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "What is Lorem Ipsum?",
+    answer:
+      "Lorem Ipsum is placeholder text used in the printing, typesetting, and design industries since the 1500s. It provides a natural-looking block of text for mockups and layouts without the distraction of meaningful content.",
+  },
+  {
+    question: "Can I generate a specific number of words or paragraphs?",
+    answer:
+      "Yes! Use the mode toggle to switch between paragraphs, sentences, or words, then adjust the count slider to generate exactly the amount of placeholder text you need.",
+  },
+  {
+    question: "Is this Lorem Ipsum generator free?",
+    answer:
+      "Completely free with no limits. Generate as much placeholder text as you need for your designs, wireframes, or development projects. No signup or account required.",
+  },
+  {
+    question: "Can I copy the generated text?",
+    answer:
+      "Yes. Click the \"Copy\" button above the output to copy all generated Lorem Ipsum text to your clipboard instantly. Then paste it into your design tool, code editor, or document.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 const LOREM_WORDS = "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum".split(" ");
 
@@ -55,6 +90,15 @@ export default function LoremIpsumGenerator() {
     <ToolLayout
       title="Lorem Ipsum Generator"
       description="Generate placeholder text in paragraphs, sentences, or words."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         {/* Mode */}

@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "base64",
     "word counter",
   ],
-  metadataBase: new URL("https://snaptools.dev"),
+  metadataBase: new URL("https://snaptools-seven.vercel.app"),
   openGraph: {
     title: "SnapTools — Free Online Tools That Work Instantly",
     description:
@@ -60,6 +60,25 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-gray-50 dark:bg-[#0a0a0f] text-gray-900 dark:text-gray-100 font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "SnapTools",
+              url: "https://snaptools-seven.vercel.app",
+              description:
+                "Free, fast, privacy-friendly online tools running entirely in your browser.",
+              potentialAction: {
+                "@type": "SearchAction",
+                target:
+                  "https://snaptools-seven.vercel.app/?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            }),
+          }}
+        />
         <ThemeProvider>
           <Header />
           {children}

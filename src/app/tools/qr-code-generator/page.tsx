@@ -3,6 +3,41 @@
 import { useState, useRef, useEffect } from "react";
 import QRCode from "qrcode";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "Is this QR code generator completely free?",
+    answer:
+      "Yes! This QR code generator is 100% free with no limits. There's no signup, no watermark, and no hidden fees. Generate as many QR codes as you need.",
+  },
+  {
+    question: "Can I download the QR code as an image?",
+    answer:
+      "Absolutely. Click the \"Download PNG\" button to save your QR code as a high-quality PNG image that you can use in print materials, websites, presentations, or anywhere else.",
+  },
+  {
+    question: "What can I encode in a QR code?",
+    answer:
+      "You can encode any text, URL, email address, phone number, Wi-Fi credentials, or any other string of characters. QR codes support up to about 4,000 characters of text.",
+  },
+  {
+    question: "Is my data safe when generating QR codes?",
+    answer:
+      "Yes. This tool runs entirely in your browser — no data is ever sent to a server. Your text and generated QR codes stay on your device, ensuring complete privacy.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 export default function QRCodeGenerator() {
   const [text, setText] = useState("https://snaptools.dev");
@@ -30,6 +65,15 @@ export default function QRCodeGenerator() {
     <ToolLayout
       title="QR Code Generator"
       description="Generate QR codes from any text or URL. Download as PNG instantly."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         <div>

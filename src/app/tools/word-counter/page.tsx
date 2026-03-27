@@ -2,6 +2,41 @@
 
 import { useState, useMemo } from "react";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "How does the word counter work?",
+    answer:
+      "Simply paste or type your text into the text area. The tool instantly counts words, characters (with and without spaces), sentences, paragraphs, and estimates reading time. All stats update in real time as you type.",
+  },
+  {
+    question: "How is reading time calculated?",
+    answer:
+      "Reading time is estimated based on an average reading speed of 200 words per minute, which is the standard for adult readers. The minimum displayed is 1 minute.",
+  },
+  {
+    question: "Can I use this for essays and academic writing?",
+    answer:
+      "Absolutely! This word counter is perfect for checking essay word counts, meeting assignment requirements, tracking character limits for applications, and ensuring your writing fits within specified constraints.",
+  },
+  {
+    question: "Does it count special characters and spaces?",
+    answer:
+      "Yes. The tool shows both total characters (including spaces) and characters without spaces. It also counts punctuation, emojis, and all Unicode characters accurately.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 export default function WordCounter() {
   const [text, setText] = useState("");
@@ -30,6 +65,15 @@ export default function WordCounter() {
     <ToolLayout
       title="Word & Character Counter"
       description="Count words, characters, sentences, and estimate reading time for any text."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">

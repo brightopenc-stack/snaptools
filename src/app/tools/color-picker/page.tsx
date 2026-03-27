@@ -2,6 +2,41 @@
 
 import { useState, useEffect } from "react";
 import ToolLayout from "@/components/ToolLayout";
+import FAQ from "@/components/FAQ";
+import type { FAQItem } from "@/components/FAQ";
+
+const faqItems: FAQItem[] = [
+  {
+    question: "How do I convert HEX to RGB or HSL?",
+    answer:
+      "Simply enter your HEX color code in the HEX input field or use the color picker. The RGB and HSL values update automatically in real time. You can also enter RGB or HSL values and see the other formats update instantly.",
+  },
+  {
+    question: "What color formats does this tool support?",
+    answer:
+      "This tool supports HEX (e.g., #3b82f6), RGB (e.g., rgb(59, 130, 246)), and HSL (e.g., hsl(217, 91%, 60%)). All formats are interconvertible and update in real time.",
+  },
+  {
+    question: "Can I copy color values to my clipboard?",
+    answer:
+      "Yes! Each color format has a \"Copy\" button that copies the value to your clipboard in one click. Use it to quickly paste colors into your CSS, design tool, or code editor.",
+  },
+  {
+    question: "Is this color picker free to use?",
+    answer:
+      "Absolutely. This color picker and converter is 100% free with no limitations. It runs entirely in your browser with no ads, no signup, and no data collection.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqItems.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 
 function hexToRgb(hex: string) {
   const m = hex.replace("#", "").match(/.{2}/g);
@@ -82,6 +117,15 @@ export default function ColorPicker() {
     <ToolLayout
       title="Color Picker & Converter"
       description="Pick colors and convert between HEX, RGB, and HSL formats instantly."
+      afterContent={
+        <>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          />
+          <FAQ items={faqItems} />
+        </>
+      }
     >
       <div className="space-y-6">
         {/* Preview */}

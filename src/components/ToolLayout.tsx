@@ -5,9 +5,10 @@ interface ToolLayoutProps {
   title: string;
   description: string;
   children: React.ReactNode;
+  afterContent?: React.ReactNode;
 }
 
-export default function ToolLayout({ title, description, children }: ToolLayoutProps) {
+export default function ToolLayout({ title, description, children, afterContent }: ToolLayoutProps) {
   return (
     <main className="flex-1 relative">
       {/* Subtle background glow */}
@@ -32,6 +33,7 @@ export default function ToolLayout({ title, description, children }: ToolLayoutP
           <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-violet-500/10 opacity-0 transition-opacity duration-500" />
           {children}
         </div>
+        {afterContent}
         <AdPlaceholder />
       </div>
     </main>
